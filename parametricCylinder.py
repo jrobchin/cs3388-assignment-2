@@ -21,8 +21,8 @@ class parametricCylinder(parametricObject):
 
     def getPoint(self,u,v):
         __P = matrix(np.array([
-            [self.__height*(1-u)/self.__height*self.__radius*cos(v)],
-            [self.__height*(1-u)/self.__height*self.__radius*sin(v)],
+            [self.__radius*cos(v)],
+            [self.__radius*sin(v)],
             [self.__height*u],
             [1]
         ]))
