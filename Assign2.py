@@ -10,6 +10,7 @@ from parametricCircle import parametricCircle
 from parametricCone import parametricCone
 from parametricCylinder import parametricCylinder
 from wireMesh import wireMesh
+from transform import transform
 
 #Set up constants required for the camera and the rendering process
 #Near and far planes
@@ -106,22 +107,30 @@ cylinderRef = (0.0,0.0,0.0)
 cylinderHeight = 20.0
 cylinderRadius = 10.0
 
-window = graphicsWindow(WIDTH,HEIGHT) #Open a graphics window
-camera = cameraMatrix(P,E,G,NP,FP,WIDTH,HEIGHT,THETA) #Set camera viewing system
 
-plane = parametricPlane(planeT,planeWidth,planeLength,planeCol,planeRef,(0.0,1.0),(0.0,1.0),(1.0/10.0,1.0/10.0))
-circle = parametricCircle(circleT,circleRadius,circleCol,circleRef,(0.0,1.0),(0.0,2.0*pi),(1.0/10.0,pi/18.0))
-sphere = parametricSphere(sphereT,sphereRadius,sphereCol,sphereRef,(0.0,2.0*pi),(0.0,pi),(pi/18.0,pi/18.0))
-cone = parametricCone(coneT,coneHeight,coneRadius,coneCol,coneRef,(0.0,1.0),(0.0,2.0*pi),(1.0/10.0,pi/18.0))
-cylinder = parametricCylinder(cylinderT,cylinderHeight,cylinderRadius,cylinderCol,cylinderRef,(0.0,1.0),(0.0,2.0*pi),(1.0/10.0,pi/18.0))
-torus = parametricTorus(torusT,torusInnerRadius,torusOuterRadius,torusCol,torusRef,(0.0,2.0*pi),(0.0,2.0*pi),(pi/18.0,pi/9.0))
+for i in range(60*5):
+    window = graphicsWindow(WIDTH,HEIGHT) #Open a graphics window
+    camera = cameraMatrix(P,E,G,NP,FP,WIDTH,HEIGHT,THETA) #Set camera viewing system
 
-window.drawSegments(wireMesh(plane,camera).getSegList(),planeCol)
-window.drawSegments(wireMesh(circle,camera).getSegList(),circleCol)
-window.drawSegments(wireMesh(sphere,camera).getSegList(),sphereCol)
-window.drawSegments(wireMesh(cone,camera).getSegList(),coneCol)
-window.drawSegments(wireMesh(cylinder,camera).getSegList(),cylinderCol)
-window.drawSegments(wireMesh(torus,camera).getSegList(),torusCol)
+    #Torus attributes
+    torusT = transform().rotate(matrix(np.ones((3,1))), pi/10.0 * i)
+    cylinderT = transform().rotate(matrix(np.array([[1], [0], [1]])), pi/100.0 * i)
+    cylinderT.set(0,3,40.0)
+    cylinderT.set(1,3,0.0)
 
-window.saveImage("testImage.png")
-window.showImage()
+    plane = parametricPlane(planeT,planeWidth,planeLength,planeCol,planeRef,(0.0,1.0),(0.0,1.0),(1.0/10.0,1.0/10.0))
+    circle = parametricCircle(circleT,circleRadius,circleCol,circleRef,(0.0,1.0),(0.0,2.0*pi),(1.0/10.0,pi/18.0))
+    sphere = parametricSphere(sphereT,sphereRadius,sphereCol,sphereRef,(0.0,2.0*pi),(0.0,pi),(pi/18.0,pi/18.0))
+    cone = parametricCone(coneT,coneHeight,coneRadius,coneCol,coneRef,(0.0,1.0),(0.0,2.0*pi),(1.0/10.0,pi/18.0))
+    cylinder = parametricCylinder(cylinderT,cylinderHeight,cylinderRadius,cylinderCol,cylinderRef,(0.0,1.0),(0.0,2.0*pi),(1.0/10.0,pi/18.0))
+    torus = parametricTorus(torusT,torusInnerRadius,torusOuterRadius,torusCol,torusRef,(0.0,2.0*pi),(0.0,2.0*pi),(pi/18.0,pi/9.0))
+
+    window.drawSegments(wireMesh(plane,camera).getSegList(),planeCol)
+    window.drawSegments(wireMesh(circle,camera).getSegList(),circleCol)
+    window.drawSegments(wireMesh(sphere,camera).getSegList(),sphereCol)
+    window.drawSegments(wireMesh(cone,camera).getSegList(),coneCol)
+    window.drawSegments(wireMesh(cylinder,camera).getSegList(),cylinderCol)
+    window.drawSegments(wireMesh(torus,camera).getSegList(),torusCol)
+
+    window.saveImage(f"frames/{i:04d}_testImage.png")
+    window.showImage()
