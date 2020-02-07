@@ -5,10 +5,10 @@ from graphicsWindow import graphicsWindow
 from cameraMatrix import cameraMatrix
 from parametricSphere import parametricSphere
 from parametricTorus import parametricTorus
-# from parametricPlane import parametricPlane
-# from parametricCircle import parametricCircle
-# from parametricCone import parametricCone
-# from parametricCylinder import parametricCylinder
+from parametricPlane import parametricPlane
+from parametricCircle import parametricCircle
+from parametricCone import parametricCone
+from parametricCylinder import parametricCylinder
 from wireMesh import wireMesh
 
 #Set up constants required for the camera and the rendering process

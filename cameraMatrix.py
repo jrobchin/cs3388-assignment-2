@@ -35,7 +35,6 @@ class cameraMatrix:
         T_inv = T_inv.insertColumn(3, -E.getArray().T)
         T_inv.set(3, 3, 1)
 
-
         __Mv = R_inv * T_inv
 
         return __Mv
